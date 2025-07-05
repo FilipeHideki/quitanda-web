@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quitanda do seu Zézinho</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+  <style>
+    body {
+      background: #f8f9fa;
+    }
+    .header {
+      background: #343a40;
+      color: #fff;
+      padding: 2rem 0;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .main-section {
+      background: #fff;
+      border-radius: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      padding: 2rem;
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .main-section img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 0.5rem;
+      margin-bottom: 1.5rem;
+      background: #e9ecef;
+      min-height: 180px;
+      display: block;
+    }
+    @media (max-width: 576px) {
+      .main-section {
+        padding: 1rem;
+      }
+      .header {
+        padding: 1rem 0;
+      }
+    }
+    .nav-link.active {
+      font-weight: bold;
+      color: #0d6efd !important;
+    }
+    .success-message {
+      color: #198754;
+      font-weight: bold;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <h1>Quitanda do seu Zézinho</h1>
+  </header>
+  <nav class="navbar navbar-expand navbar-light bg-light mb-4" aria-label="Navegação principal">
+    <div class="container justify-content-center">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" href="#" id="nav-home" aria-current="page">Início</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" id="nav-contato">Contato</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <main>
+    <section class="main-section" id="section-home">
+      <p class="mb-4 fs-5">Seja bem vindo(a) à página da Quitanda do seu Zézinho! Caso deseje comprar algum produto, clique no botão abaixo.</p>
+      <img src="https://cdn6.campograndenews.com.br/uploads/noticias/2021/04/06/7351655868dc4c1a4aca05875b0bfeccac919f5b.jpeg" alt="Quitanda do seu Zézinho" class="mb-3">
+      <button class="btn btn-primary btn-lg mt-2" id="btn-contato">Contato</button>
+    </section>
+    <section class="main-section d-none" id="section-contato">
+      <h2 class="mb-4">Contato</h2>
+      <form id="form-contato" novalidate>
+        <div class="mb-3">
+          <label for="nome" class="form-label">Nome</label>
+          <input type="text" class="form-control" id="nome" required aria-required="true">
+        </div>
+        <div class="mb-3">
+          <label for="mensagem" class="form-label">Mensagem</label>
+          <textarea class="form-control" id="mensagem" rows="3" required aria-required="true"></textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Enviar</button>
+      </form>
+      <div id="contato-sucesso" class="success-message d-none" role="status" aria-live="polite"></div>
+    </section>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+  <script>
+    const navHome = document.getElementById('nav-home');
+    const navContato = document.getElementById('nav-contato');
+    const sectionHome = document.getElementById('section-home');
+    const sectionContato = document.getElementById('section-contato');
+    const btnContato = document.getElementById('btn-contato');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    function showSection(section) {
+      if (section === 'home') {
+        sectionHome.classList.remove('d-none');
+        sectionContato.classList.add('d-none');
+        navHome.classList.add('active');
+        navContato.classList.remove('active');
+      } else {
+        sectionHome.classList.add('d-none');
+        sectionContato.classList.remove('d-none');
+        navHome.classList.remove('active');
+        navContato.classList.add('active');
+        document.getElementById('nome').focus();
+      }
+    }
+
+    navHome.addEventListener('click', function(e) {
+      e.preventDefault();
+      showSection('home');
+    });
+    navContato.addEventListener('click', function(e) {
+      e.preventDefault();
+      showSection('contato');
+    });
+    btnContato.addEventListener('click', function() {
+      showSection('contato');
+    });
+
+    const formContato = document.getElementById('form-contato');
+    const contatoSucesso = document.getElementById('contato-sucesso');
+    formContato.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const nome = document.getElementById('nome').value.trim();
+      const mensagem = document.getElementById('mensagem').value.trim();
+      if (nome && mensagem) {
+        contatoSucesso.textContent = 'Mensagem enviada com sucesso! Obrigado, ' + nome + '!';
+        contatoSucesso.classList.remove('d-none');
+        formContato.reset();
+        setTimeout(() => {
+          contatoSucesso.classList.add('d-none');
+        }, 4000);
+      } else {
+        contatoSucesso.textContent = 'Por favor, preencha todos os campos.';
+        contatoSucesso.classList.remove('d-none');
+      }
+    });
+  </script>
+</body>
+</html> 
